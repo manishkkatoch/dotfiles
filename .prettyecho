@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+function log() {
+	echo -e "\e[49m$@\e[49m"
+}
+
+function info() {
+	echo -e "\e[38;5;32m [i] $@\e[0m"
+}
+
+function warn() {
+	echo -e "\e[38;5;220m [!] $@\e[0m"
+}
+
+function error() {
+	echo -e "\e[38;5;197m [⨯] $@\e[0m"
+}
+
+function ok() {
+	echo -e "\e[38;5;156m [✔] $@\e[0m"
+}

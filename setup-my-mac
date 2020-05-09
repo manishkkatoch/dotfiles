@@ -1,0 +1,62 @@
+#!/usr/bin/env zsh
+
+sudo -v
+
+source .prettyecho
+source .functions
+
+run_log_file=$(echo "run-log-$(date +%F_%H-%M).log")
+echo "log will be available at $run_log_file"
+
+function install_from () {
+	    local input=$1
+        info "reading packages to install from : $input"
+        while read -rd ' ' pkg
+        do
+                [[ -z $pkg ]] && continue 
+				[[ $pkg =~ ^#.* ]] && warn "skipping ${pkg:1}" && continue
+                echo "installing $pkg"
+				
+				brew info $pkg >> $run_log_file 2>&1 && \
+				warn "installing from brew" && \
+				brew_install $pkg && \
+				continue;
+
+				brew cask info $pkg >> $run_log_file 2>&1 && \
+				warn "installing from cask" && \
+				cask_install $pkg && \
+				continue;
+				
+				error "no formula or cask found for $pkg";
+				
+        done <<<"$(read_file $input) ";
+}
+
+function do_install() {
+	install_from ./.install-list
+	info "Homebrew cleanup"
+	brew cleanup && brew doctor
+	ok "All Done!"	
+}
+
+
+function bash_tools() {
+	info "installing bash tools"
+	file='./.bash-tools'
+	while IFS=',' read -r pkg url
+	do
+		
+		if [ ! -z $pkg ]; then
+			[[ $pkg =~ ^#.* ]] && continue
+			warn "installing $pkg"
+			$(which zsh) -c "$(curl -fsSL $url)" >> $run_log_file 2>&1 &&
+			ok "installed $pkg"
+		fi
+	done < $file 
+}
+
+bash_tools
+do_install
+info "symlinking these dotfiles..."
+bash ./symlink
+ok "All Set!"
