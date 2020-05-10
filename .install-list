@@ -1,6 +1,7 @@
 openssl
 gnupg
 git
+diff-so-fancy
 python
 openjdk@11
 jenv
