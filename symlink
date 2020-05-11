@@ -156,7 +156,7 @@ main() {
     local i=""
     local sourceFile=""
     local targetFile=""
-
+	
     for i in ${FILES_TO_SYMLINK[@]}; do
 
         sourceFile="$(pwd)/$i"
@@ -181,7 +181,8 @@ main() {
         fi
 
     done
-
+    sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+    print_success "symlinked openjdk@11"	
 }
 
 main
