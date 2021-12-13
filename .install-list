@@ -17,9 +17,9 @@ discord
 docker
 firefox
 google-chrome
-font-saucecodepro-nerd-font
-font-firacode-nerd-font
-font-inconsolata-nerd-font
+#font-saucecodepro-nerd-font
+#font-firacode-nerd-font
+#font-inconsolata-nerd-font
 iterm2
 intellij-idea-ce
 kap
