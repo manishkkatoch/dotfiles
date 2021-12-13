@@ -114,12 +114,12 @@ shellswitch () {
 
 function brew_install() {
 	local package=$1
-	(nullify brew ls $package && ok "$package already installed")  || (brew install $package && ok "$package installed!")
+	(nullify brew ls $package && ok "$package already installed")  || (brew install $package </dev/null && ok "$package installed!")
 }
 
 function cask_install() {
 	local package=$1
-	(nullify brew cask ls $package && ok "$package already installed") || (brew cask install $package && ok "$package installed!")
+	(nullify brew cask ls $package && ok "$package already installed") || (brew cask install $package </dev/null && ok "$package installed!")
 }
 
 function brew_uninstall() {
